@@ -3,7 +3,4 @@
 /android/
 
 # Estragon specific ignores
-
-estragon_setup.ps1
-estragon_build.ps1
 PCK_SECRET.key
