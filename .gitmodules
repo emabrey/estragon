@@ -1,0 +1,3 @@
+[submodule "vendored/godot"]
+	path = vendored/godot
+	url = https://github.com/emabrey/godot.git
