@@ -10,7 +10,7 @@ if (-not (Test-Path $PCK_SECRET_FILEPATH)) {
 $pckSecret = Get-Content $PCK_SECRET_FILEPATH | ConvertTo-SecureString
 $env:SCRIPT_AES256_ENCRYPTION_KEY = ConvertFrom-SecureString -AsPlainText -SecureString $pckSecret
 
-Push-Location ./vendored/godot
+Push-Location ./vendored/godot -ErrorAction SilentlyContinue
 
 #scons target=editor --clean
 #scons target=template_release --clean
@@ -32,11 +32,10 @@ elseif ($IsLinux)
 	./bin/godot.linux.editor.x86_64.estragon.mono --headless --generate-mono-glue ./modules/mono/glue
 }
 
-
 scons target=template_release
 scons target=template_debug
-New-Item -Path "$env:USERPROFILE\.godotnuget" -ItemType Directory
+New-Item -Path "$env:USERPROFILE\.godotnuget" -ItemType Directory -ErrorAction SilentlyContinue
 dotnet nuget add source "$env:USERPROFILE\.godotnuget" --name GodotNuget
 python ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir ./bin --push-nupkgs-local GodotNuget
 
-Pop-Location
+Pop-Location -ErrorAction SilentlyContinue

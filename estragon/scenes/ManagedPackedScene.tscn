@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bobmmrjnkw8i6"]
 
-[ext_resource type="Script" uid="uid://cisgj1wkd2c8j" path="res://scripts/GameSceneManager/managed_packed_scene.gd" id="1_2hcrd"]
+[ext_resource type="Script" path="res://scripts/GameSceneManager/ManagedPackedScene.cs" id="1_2hcrd"]
 
 [node name="ManagedPackedScene" type="Node2D"]
 script = ExtResource("1_2hcrd")

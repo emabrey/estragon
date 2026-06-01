@@ -1,13 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://rncyqubh704c"]
+[gd_scene format=3 uid="uid://rncyqubh704c"]
 
-[ext_resource type="Script" uid="uid://b0mgou7gbhuj" path="res://scripts/GameSceneManager/game_scene_manager.gd" id="1_83i4r"]
-[ext_resource type="Script" uid="uid://cisgj1wkd2c8j" path="res://scripts/GameSceneManager/managed_packed_scene.gd" id="2_3bp1d"]
+[ext_resource type="Script" path="res://scripts/GameSceneManager/GameSceneManager.cs" id="1_83i4r"]
+[ext_resource type="Script" path="res://scripts/GameSceneManager/ManagedPackedScene.cs" id="2_3bp1d"]
 [ext_resource type="PackedScene" uid="uid://ch7jcuypebt7" path="res://scenes/loaded/StartupCreditsStudio/StartupCreditStudio.tscn" id="4_3bp1d"]
-[ext_resource type="Script" uid="uid://dmd8qnt28o6yi" path="res://scripts/ui/fading_audio_stream_player.gd" id="4_gcfhf"]
+[ext_resource type="Script" path="res://scripts/ui/FadedAudioStreamPlayer.cs" id="4_gcfhf"]
 [ext_resource type="PackedScene" uid="uid://bvoynythrv78n" path="res://scenes/loaded/MainMenu/MainMenu.tscn" id="4_o25xe"]
 [ext_resource type="PackedScene" uid="uid://cibqa1s5hsei4" path="res://scenes/loaded/Settings/Settings.tscn" id="5_vegdx"]
 [ext_resource type="PackedScene" uid="uid://croabr6x3sfqh" path="res://scenes/loaded/MainGame/MainGame.tscn" id="7_pwovl"]
-[ext_resource type="Script" uid="uid://b2usdbt7krwhc" path="res://scripts/ui/pause_screen.gd" id="8_rbo2x"]
+[ext_resource type="Script" path="res://scripts/ui/PauseScreen.cs" id="8_rbo2x"]
 
 [sub_resource type="Environment" id="Environment_xfytv"]
 background_mode = 3
@@ -16,28 +16,20 @@ background_mode = 3
 
 [sub_resource type="Resource" id="Resource_vi57m"]
 script = ExtResource("2_3bp1d")
-targetScene = ExtResource("7_pwovl")
-transition = 1
-metadata/_custom_type_script = ExtResource("2_3bp1d")
-
+TargetScene = ExtResource("7_pwovl")
+Transition = 1
 [sub_resource type="Resource" id="Resource_vqq6x"]
 script = ExtResource("2_3bp1d")
-targetScene = ExtResource("4_o25xe")
-transition = 1
-metadata/_custom_type_script = ExtResource("2_3bp1d")
-
+TargetScene = ExtResource("4_o25xe")
+Transition = 1
 [sub_resource type="Resource" id="Resource_hhdsw"]
 script = ExtResource("2_3bp1d")
-targetScene = ExtResource("5_vegdx")
-transition = 1
-metadata/_custom_type_script = ExtResource("2_3bp1d")
-
+TargetScene = ExtResource("5_vegdx")
+Transition = 1
 [sub_resource type="Resource" id="Resource_ux0w2"]
 script = ExtResource("2_3bp1d")
-targetScene = ExtResource("4_3bp1d")
-transition = 1
-metadata/_custom_type_script = ExtResource("2_3bp1d")
-
+TargetScene = ExtResource("4_3bp1d")
+Transition = 1
 [sub_resource type="Animation" id="Animation_pwovl"]
 length = 0.001
 tracks/0/type = "value"
@@ -184,40 +176,34 @@ _data = {
 &"vertical_wipe_in": SubResource("Animation_3bp1d")
 }
 
-[node name="WorldEnvironment" type="WorldEnvironment"]
+[node name="WorldEnvironment" type="WorldEnvironment" unique_id=365442357]
 process_mode = 3
 environment = SubResource("Environment_xfytv")
 camera_attributes = SubResource("CameraAttributesPractical_82861")
 
-[node name="GameSceneManager" type="Node2D" parent="."]
+[node name="GameSceneManager" type="Node2D" parent="." unique_id=1064683203]
 unique_name_in_owner = true
 script = ExtResource("1_83i4r")
-scenes = Dictionary[StringName, ExtResource("2_3bp1d")]({
+Scenes = Dictionary[StringName, ExtResource("2_3bp1d")]({
 &"MainGame": SubResource("Resource_vi57m"),
 &"MainMenu": SubResource("Resource_vqq6x"),
 &"Settings": SubResource("Resource_hhdsw"),
 &"StartupCreditsStudio": SubResource("Resource_ux0w2")
 })
 
-[node name="SceneParent" type="Node2D" parent="GameSceneManager"]
+[node name="SceneParent" type="Node2D" parent="GameSceneManager" unique_id=789826941]
 process_mode = 1
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="GameSceneManager"]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="GameSceneManager" unique_id=1945597426]
 unique_name_in_owner = true
 process_mode = 1
-bus = &"Music"
 script = ExtResource("4_gcfhf")
-metadata/_custom_type_script = ExtResource("4_gcfhf")
-
-[node name="EffectPlayer" type="AudioStreamPlayer" parent="GameSceneManager"]
+[node name="EffectPlayer" type="AudioStreamPlayer" parent="GameSceneManager" unique_id=983088505]
 unique_name_in_owner = true
 process_mode = 1
 max_polyphony = 8
-bus = &"Effects"
 script = ExtResource("4_gcfhf")
-metadata/_custom_type_script = ExtResource("4_gcfhf")
-
-[node name="TransitionMatte" type="ColorRect" parent="."]
+[node name="TransitionMatte" type="ColorRect" parent="." unique_id=1062713355]
 unique_name_in_owner = true
 top_level = true
 z_index = 4096
@@ -230,18 +216,16 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="TransitionMatte"]
-libraries = {
-&"": SubResource("AnimationLibrary_le02f")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TransitionMatte" unique_id=964131179]
+libraries/ = SubResource("AnimationLibrary_le02f")
 
-[node name="PauseScreen" type="CanvasLayer" parent="."]
+[node name="PauseScreen" type="CanvasLayer" parent="." unique_id=1075035631]
 process_mode = 3
 layer = 99
 visible = false
 script = ExtResource("8_rbo2x")
 
-[node name="ColorRect" type="ColorRect" parent="PauseScreen"]
+[node name="ColorRect" type="ColorRect" parent="PauseScreen" unique_id=1656240685]
 custom_minimum_size = Vector2(1920, 1080)
 anchors_preset = 15
 anchor_right = 1.0
@@ -250,7 +234,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0313726, 0.0313726, 0.0313726, 0.686275)
 
-[node name="Label" type="Label" parent="PauseScreen"]
+[node name="Label" type="Label" parent="PauseScreen" unique_id=139942273]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

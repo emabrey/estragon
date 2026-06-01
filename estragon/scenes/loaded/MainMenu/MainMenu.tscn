@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://bvoynythrv78n"]
 
-[ext_resource type="Script" uid="uid://dr8w6rtdmqfoh" path="res://scripts/LoadedScenes/MainMenu/game_version.gd" id="1_lvc51"]
-[ext_resource type="Script" uid="uid://showox6akff6" path="res://scripts/LoadedScenes/MainMenu/main_menu_scene.gd" id="1_vxrxc"]
+[ext_resource type="Script" path="res://scripts/LoadedScenes/MainMenu/GameVersion.cs" id="1_lvc51"]
+[ext_resource type="Script" path="res://scripts/LoadedScenes/MainMenu/MainMenuScene.cs" id="1_vxrxc"]
 [ext_resource type="PackedScene" uid="uid://dtbupvqhepfac" path="res://scenes/ui/SoundEffectButton.tscn" id="1_ywlig"]
-[ext_resource type="Script" uid="uid://cqwx8mi8mdn81" path="res://scripts/LoadedScenes/MainMenu/start_button.gd" id="3_eq4ti"]
-[ext_resource type="Script" uid="uid://mx26vtx8uivi" path="res://scripts/LoadedScenes/MainMenu/settings_button.gd" id="4_vxrxc"]
-[ext_resource type="Script" uid="uid://ip5g5a21amoo" path="res://scripts/LoadedScenes/MainMenu/credits_button.gd" id="6_vyydk"]
+[ext_resource type="Script" path="res://scripts/LoadedScenes/MainMenu/StartButton.cs" id="3_eq4ti"]
+[ext_resource type="Script" path="res://scripts/LoadedScenes/MainMenu/SettingsButton.cs" id="4_vxrxc"]
+[ext_resource type="Script" path="res://scripts/LoadedScenes/MainMenu/CreditsButton.cs" id="6_vyydk"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_40lmc"]
 

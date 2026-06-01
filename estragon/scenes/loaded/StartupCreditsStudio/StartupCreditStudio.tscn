@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://ch7jcuypebt7"]
 
-[ext_resource type="Script" uid="uid://cn4aj5doihf3p" path="res://scripts/LoadedScenes/StartupCreditStudio/startup_credit_studio.gd" id="1_ggjln"]
+[ext_resource type="Script" path="res://scripts/LoadedScenes/StartupCreditStudio/StartupCreditStudio.cs" id="1_ggjln"]
 [ext_resource type="Texture2D" uid="uid://c1dsi3xos4oxx" path="res://assets/images/StartupCreditStudio/studio_credits.png" id="1_np4x0"]
 [ext_resource type="Theme" uid="uid://2m230b8vsc57" path="res://assets/themes/credits_theme.tres" id="1_tctps"]
 

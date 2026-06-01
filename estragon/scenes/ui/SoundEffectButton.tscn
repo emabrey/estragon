@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dtbupvqhepfac"]
 
-[ext_resource type="Script" uid="uid://ovo73gq2jipx" path="res://scripts/ui/sound_effect_button.gd" id="1_83ljo"]
+[ext_resource type="Script" path="res://scripts/ui/SoundEffectButton.cs" id="1_83ljo"]
 
 [node name="SoundEffectButton" type="Button"]
 anchors_preset = 15

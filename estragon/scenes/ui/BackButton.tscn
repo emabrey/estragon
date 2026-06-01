@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://dr7augqauv38y" path="res://assets/themes/estragon_theme.tres" id="2_sddfh"]
 [ext_resource type="FontFile" uid="uid://h0feucj5qpoo" path="res://assets/font/MaterialSymbolsOutlined.ttf" id="3_7gjsd"]
 [ext_resource type="Script" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="4_s2coj"]
-[ext_resource type="Script" uid="uid://clyomt13l4vl4" path="res://scripts/ui/back_button.gd" id="5_7gjsd"]
+[ext_resource type="Script" path="res://scripts/ui/BackButton.cs" id="5_7gjsd"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_sddfh"]
 action = &"ui_back"
