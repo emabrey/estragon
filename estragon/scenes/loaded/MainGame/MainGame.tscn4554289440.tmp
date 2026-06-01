@@ -1,0 +1,159 @@
+[gd_scene load_steps=16 format=3 uid="uid://croabr6x3sfqh"]
+
+[ext_resource type="Texture2D" uid="uid://88k0cx6j28fr" path="res://assets/images/MainGame/background/background2_NearFore.png" id="1_1v2j5"]
+[ext_resource type="PackedScene" uid="uid://dtbupvqhepfac" path="res://scenes/ui/SoundEffectButton.tscn" id="1_d52ll"]
+[ext_resource type="Texture2D" uid="uid://25jfs756xy56" path="res://assets/images/MainGame/background/background2_FarFore.png" id="2_d52ll"]
+[ext_resource type="Script" uid="uid://de75s6rlk1em0" path="res://addons/controller_icons/objects/ControllerIconTexture.gd" id="2_fse2a"]
+[ext_resource type="Script" uid="uid://fs684gf4loih" path="res://scripts/LoadedScenes/MainGame/open_map_button.gd" id="2_uyfxy"]
+[ext_resource type="Texture2D" uid="uid://b7c8ai0b4315d" path="res://assets/images/MainGame/background/background2_FarBack.png" id="3_uyfxy"]
+[ext_resource type="PackedScene" uid="uid://bi64ctjwdefjn" path="res://scenes/loaded/MainGame/Map.tscn" id="3_wgqhb"]
+[ext_resource type="Texture2D" uid="uid://d02x0gafjuji0" path="res://assets/images/MainGame/background/background2_NearBack.png" id="4_wgqhb"]
+[ext_resource type="Script" uid="uid://b016iaayyjr2c" path="res://scripts/LoadedScenes/MainGame/PlatformerLevel/level_loader.gd" id="5_rj62q"]
+[ext_resource type="Script" uid="uid://cdiecmbce1otm" path="res://scripts/LoadedScenes/MainGame/character_body_2d.gd" id="12_crm58"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_wgqhb"]
+action = &"ui_open_map"
+
+[sub_resource type="Shortcut" id="Shortcut_fse2a"]
+events = [SubResource("InputEventAction_wgqhb")]
+
+[sub_resource type="Texture2D" id="Texture2D_dd8l8"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_fse2a")
+path = "ui_open_map"
+show_mode = 0
+force_type = 0
+metadata/_custom_type_script = ExtResource("2_fse2a")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t0yss"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_crm58"]
+
+[node name="MainGameScene" type="Node2D"]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TopLevelGui" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 957.0
+offset_bottom = 543.0
+metadata/_edit_lock_ = true
+
+[node name="OpenMapButton" parent="HUD/TopLevelGui" instance=ExtResource("1_d52ll")]
+z_index = 5
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -77.0
+offset_top = 13.0
+offset_right = -10.0
+offset_bottom = 44.0
+grow_horizontal = 0
+grow_vertical = 1
+focus_next = NodePath("../CenterContainer/PopupPanel/Map")
+focus_previous = NodePath("../CenterContainer/PopupPanel/Map")
+toggle_mode = true
+shortcut = SubResource("Shortcut_fse2a")
+shortcut_in_tooltip = false
+text = "Map"
+icon = SubResource("Texture2D_dd8l8")
+alignment = 2
+expand_icon = true
+script = ExtResource("2_uyfxy")
+metadata/_edit_lock_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="HUD/TopLevelGui"]
+custom_minimum_size = Vector2(960, 540)
+layout_mode = 2
+offset_right = 960.0
+offset_bottom = 540.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="PopupPanel" type="PanelContainer" parent="HUD/TopLevelGui/CenterContainer"]
+visible = false
+custom_minimum_size = Vector2(250, 500)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="Map" parent="HUD/TopLevelGui/CenterContainer/PopupPanel" instance=ExtResource("3_wgqhb")]
+z_index = 1
+layout_mode = 2
+focus_previous = NodePath("../../../OpenMapButton")
+focus_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(480, 270)
+scale = Vector2(1.05, 1.05)
+metadata/_edit_lock_ = true
+
+[node name="NearFore" type="Parallax2D" parent="Background"]
+z_index = -1
+scroll_scale = Vector2(0.3, 0)
+repeat_size = Vector2(960, 0)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/NearFore"]
+texture = ExtResource("1_1v2j5")
+metadata/_edit_lock_ = true
+
+[node name="FarFore" type="Parallax2D" parent="Background"]
+z_index = -2
+scroll_scale = Vector2(0.25, 0)
+repeat_size = Vector2(960, 0)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/FarFore"]
+texture = ExtResource("2_d52ll")
+metadata/_edit_lock_ = true
+
+[node name="NearBack" type="Parallax2D" parent="Background"]
+z_index = -3
+scroll_scale = Vector2(0.1, 0)
+repeat_size = Vector2(960, 0)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/NearBack"]
+texture = ExtResource("3_uyfxy")
+metadata/_edit_lock_ = true
+
+[node name="FarBack" type="Parallax2D" parent="Background"]
+z_index = -4
+scroll_scale = Vector2(0.05, 0)
+repeat_size = Vector2(960, 0)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/FarBack"]
+texture = ExtResource("4_wgqhb")
+metadata/_edit_lock_ = true
+
+[node name="LevelLoader" type="Node2D" parent="."]
+script = ExtResource("5_rj62q")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(62, 326)
+script = ExtResource("12_crm58")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CapsuleShape2D_t0yss")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(-1.19209e-06, 1.46031e-05)
+scale = Vector2(14, 22)
+texture = SubResource("PlaceholderTexture2D_crm58")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[connection signal="toggled" from="HUD/TopLevelGui/OpenMapButton" to="HUD/TopLevelGui/OpenMapButton" method="_on_toggled"]

@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://d4h7kb5n7s2vl"]
+
+[ext_resource type="Script" uid="uid://byj42bs2giul7" path="res://scripts/ui/map_room_visual.gd" id="1_jfgop"]
+[ext_resource type="Texture2D" uid="uid://2jybrtppleec" path="res://assets/images/MainGame/Kyrise's 16x16 RPG Icon Pack - V1.3/icons/16x16/sword_02b.png" id="2_jfgop"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jfgop"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_8ggfp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ncma3"]
+resource_name = "highlight"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.5, 1),
+"transitions": PackedFloat32Array(1, -2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.4, 1.4), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2xcru"]
+_data = {
+&"RESET": SubResource("Animation_8ggfp"),
+&"highlight": SubResource("Animation_ncma3")
+}
+
+[node name="MapRoomVisual" type="TextureButton"]
+custom_minimum_size = Vector2(16, 16)
+anchors_preset = -1
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(8, 8)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource("2_jfgop")
+texture_hover = SubResource("PlaceholderTexture2D_jfgop")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("1_jfgop")
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2xcru")
+}

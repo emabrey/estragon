@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://croabr6x3sfqh"]
+
+[node name="MainGame" type="Node2D" unique_id=310588151]
+
+[node name="Label" type="Label" parent="." unique_id=503288351]
+offset_left = 271.0
+offset_top = 141.0
+offset_right = 311.0
+offset_bottom = 164.0
+text = "This is the game's main scene"
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

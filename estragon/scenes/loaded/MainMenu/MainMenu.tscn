@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://bvoynythrv78n"]
+
+[ext_resource type="Script" uid="uid://dr8w6rtdmqfoh" path="res://scripts/LoadedScenes/MainMenu/game_version.gd" id="1_lvc51"]
+[ext_resource type="Script" uid="uid://showox6akff6" path="res://scripts/LoadedScenes/MainMenu/main_menu_scene.gd" id="1_vxrxc"]
+[ext_resource type="PackedScene" uid="uid://dtbupvqhepfac" path="res://scenes/ui/SoundEffectButton.tscn" id="1_ywlig"]
+[ext_resource type="Script" uid="uid://cqwx8mi8mdn81" path="res://scripts/LoadedScenes/MainMenu/start_button.gd" id="3_eq4ti"]
+[ext_resource type="Script" uid="uid://mx26vtx8uivi" path="res://scripts/LoadedScenes/MainMenu/settings_button.gd" id="4_vxrxc"]
+[ext_resource type="Script" uid="uid://ip5g5a21amoo" path="res://scripts/LoadedScenes/MainMenu/credits_button.gd" id="6_vyydk"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_40lmc"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_60tlc"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_5d1kx"]
+
+[node name="MainMenuScene" type="Node2D" unique_id=884567371]
+script = ExtResource("1_vxrxc")
+
+[node name="Panel" type="Panel" parent="." unique_id=40600318]
+custom_minimum_size = Vector2(960, 540)
+offset_right = 960.0
+offset_bottom = 540.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1802311683]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 58.0
+offset_right = 253.0
+offset_bottom = 213.0
+
+[node name="GameTitle" type="Label" parent="Panel/VBoxContainer" unique_id=1551352101]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Estragon"
+
+[node name="GameVersion" type="Label" parent="Panel/VBoxContainer" unique_id=847259865]
+layout_mode = 2
+text = "%version%"
+script = ExtResource("1_lvc51")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=90364334]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -466.0
+offset_top = -27.0
+offset_right = -206.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/margin_left = 10
+
+[node name="Buttons" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=344816390]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="StartButton" parent="Panel/MarginContainer/Buttons" unique_id=769586525 instance=ExtResource("1_ywlig")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../CreditsButton")
+focus_neighbor_top = NodePath("../CreditsButton")
+focus_neighbor_right = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../CreditsButton")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_40lmc")
+text = "Start Game"
+script = ExtResource("3_eq4ti")
+
+[node name="SettingsButton" parent="Panel/MarginContainer/Buttons" unique_id=973409080 instance=ExtResource("1_ywlig")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../StartButton")
+focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_right = NodePath("../CreditsButton")
+focus_neighbor_bottom = NodePath("../CreditsButton")
+focus_next = NodePath("../CreditsButton")
+focus_previous = NodePath("../StartButton")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_60tlc")
+text = "Settings"
+script = ExtResource("4_vxrxc")
+
+[node name="CreditsButton" parent="Panel/MarginContainer/Buttons" unique_id=1886908100 instance=ExtResource("1_ywlig")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../SettingsButton")
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../StartButton")
+focus_next = NodePath("../StartButton")
+focus_previous = NodePath("../SettingsButton")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5d1kx")
+text = "Credits"
+script = ExtResource("6_vyydk")
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="tree_entered" from="Panel/VBoxContainer/GameVersion" to="Panel/VBoxContainer/GameVersion" method="_on_tree_entered"]
+[connection signal="toggled" from="Panel/MarginContainer/Buttons/StartButton" to="Panel/MarginContainer/Buttons/StartButton" method="_on_toggled"]
+[connection signal="tree_entered" from="Panel/MarginContainer/Buttons/StartButton" to="Panel/MarginContainer/Buttons/StartButton" method="_on_tree_entered"]
+[connection signal="toggled" from="Panel/MarginContainer/Buttons/SettingsButton" to="Panel/MarginContainer/Buttons/SettingsButton" method="_on_toggled"]
+[connection signal="toggled" from="Panel/MarginContainer/Buttons/CreditsButton" to="Panel/MarginContainer/Buttons/CreditsButton" method="_on_toggled"]

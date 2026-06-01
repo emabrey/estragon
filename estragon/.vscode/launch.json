@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Launch - Windows",
+                "type": "coreclr",
+                "request": "launch",
+                "preLaunchTask": "build",
+                "program": "${workspaceFolder}/../vendored/godot/bin/godot.windows.editor.x86_64.estragon.mono",
+                "args": [],
+                "cwd": "${workspaceFolder}",
+                "stopAtEntry": false
+            },
+            {
+                "name": "Launch - Linux",
+                "type": "coreclr",
+                "request": "launch",
+                "preLaunchTask": "build",
+                "program": "${workspaceFolder}/../vendored/godot/bin/godot.linux.editor.x86_64.estragon.mono",
+                "args": [],
+                "cwd": "${workspaceFolder}",
+                "stopAtEntry": false
+            }
+        ]
+    }
