@@ -2,7 +2,7 @@
 
 git submodule update --init --recursive --depth 1
 
-$PCK_SECRET_FILEPATH = "./PCK_SECRET.key"
+$PCK_SECRET_FILEPATH = "./godot.gdkey"
 if (-not (Test-Path $PCK_SECRET_FILEPATH)) {
     Read-Host "Enter OpenSSL Key" -AsSecureString | ConvertFrom-SecureString | Set-Content $PCK_SECRET_FILEPATH
 }
