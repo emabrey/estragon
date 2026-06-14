@@ -3,4 +3,4 @@
 /android/
 
 # Estragon specific ignores
-PCK_SECRET.key
+godot.gdkey
