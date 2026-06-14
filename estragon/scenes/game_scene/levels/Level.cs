@@ -9,7 +9,7 @@ public partial class Level : Node
     /// <summary>Optional path to the next level if using an open world level system.</summary>
     [Export(PropertyHint.File, "*.tscn")] public string NextLevelPath { get; set; } = "";
 
-    private LevelState _levelState;
+    private LevelState? _levelState;
 
     private void _on_lose_button_pressed() => EmitSignal(SignalName.LevelLost);
 
@@ -18,6 +18,7 @@ public partial class Level : Node
     public void OpenTutorials()
     {
         GetNode<TutorialManager>("%TutorialManager").OpenTutorials();
+        if (_levelState == null) return;
         _levelState.TutorialRead = true;
         GlobalState.Save();
     }
@@ -25,6 +26,7 @@ public partial class Level : Node
     public override void _Ready()
     {
         _levelState = GameState.GetLevelState(SceneFilePath);
+        if (_levelState == null) return;
         GetNode<ColorPickerButton>("%ColorPickerButton").Color = _levelState.Color;
         GetNode<ColorRect>("%BackgroundColor").Color = _levelState.Color;
         if (!_levelState.TutorialRead)
@@ -34,6 +36,7 @@ public partial class Level : Node
     private void _on_color_picker_button_color_changed(Color color)
     {
         GetNode<ColorRect>("%BackgroundColor").Color = color;
+        if (_levelState == null) return;
         _levelState.Color = color;
         GlobalState.Save();
     }

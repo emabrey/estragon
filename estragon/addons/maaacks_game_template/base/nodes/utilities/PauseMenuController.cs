@@ -3,10 +3,10 @@ using Godot;
 /// <summary>Node for opening a pause menu when detecting a 'ui_cancel' event.</summary>
 public partial class PauseMenuController : Node
 {
-    [Export] public PackedScene PauseMenuPacked { get; set; }
-    [Export] public Viewport FocusedViewport { get; set; }
+    [Export] public PackedScene PauseMenuPacked { get; set; } = null!;
+    [Export] public Viewport FocusedViewport { get; set; } = null!;
 
-    private Node _pauseMenu;
+    private Node _pauseMenu = null!;
 
     public async void Pause()
     {

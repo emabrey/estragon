@@ -30,13 +30,13 @@ public partial class MusicController : Node
 
     [Export] public bool EmptyStreamsStopPlayer { get; set; } = true;
 
-    private AudioStreamPlayer _musicStreamPlayer;
-    private StringName _blendAudioBus;
+    private AudioStreamPlayer _musicStreamPlayer = null!;
+    private StringName _blendAudioBus = null!;
     private int _blendAudioBusIdx;
 
     private readonly Dictionary<AudioStreamPlayer, Callable> _treeExitingCallables = new();
 
-    public Tween FadeOut(float duration = 0.0f)
+    public Tween? FadeOut(float duration = 0.0f)
     {
         if (Mathf.IsZeroApprox(duration))
             return null;
@@ -49,7 +49,7 @@ public partial class MusicController : Node
     private void SetSubAudioVolumeDb(float subVolumeDb)
         => AudioServer.SetBusVolumeDb(_blendAudioBusIdx, subVolumeDb);
 
-    public Tween FadeIn(float duration = 0.0f)
+    public Tween? FadeIn(float duration = 0.0f)
     {
         if (Mathf.IsZeroApprox(duration))
             return null;
@@ -60,7 +60,7 @@ public partial class MusicController : Node
         return tween;
     }
 
-    public Tween BlendTo(float targetVolumeDb, float duration = 0.0f)
+    public Tween? BlendTo(float targetVolumeDb, float duration = 0.0f)
     {
         if (!Mathf.IsZeroApprox(duration))
         {

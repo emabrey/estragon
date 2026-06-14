@@ -3,7 +3,7 @@ using Godot;
 /// <summary>Main menu extension that adds options. Adds a 'Continue' button if a game is in progress.</summary>
 public partial class MainMenuWithOptions : MainMenu
 {
-    [Export] public PackedScene LevelSelectPackedScene { get; set; }
+    [Export] public PackedScene LevelSelectPackedScene { get; set; } = null!;
     [Export] public bool ConfirmNewGame { get; set; } = true;
 
     private Control ContinueGameButton => GetNode<Control>("%ContinueGameButton");

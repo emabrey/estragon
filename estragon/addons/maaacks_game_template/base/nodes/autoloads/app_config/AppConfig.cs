@@ -3,7 +3,7 @@ using Godot;
 [GlobalClass]
 public partial class AppConfig : Node
 {
-    public static AppConfig Instance { get; private set; }
+    public static AppConfig Instance { get; private set; } = null!;
 
     [ExportGroup("Scenes")]
     [Export(PropertyHint.File, "*.tscn")] public string MainMenuScenePath { get; set; } = "";

@@ -143,7 +143,7 @@ public static class InputEventHelper
             return "";
         if (@event is InputEventJoypadButton joypadButton)
         {
-            if (JoyButtonNames.TryGetValue(joypadButton.ButtonIndex, out string buttonName))
+            if (JoyButtonNames.TryGetValue(joypadButton.ButtonIndex, out string? buttonName))
                 return buttonName;
         }
         else if (@event is InputEventJoypadMotion joypadMotion)
@@ -151,7 +151,7 @@ public static class InputEventHelper
             string fullString = "";
             string directionString = "";
             bool isRightOrDown = joypadMotion.AxisValue > 0.0f;
-            if (JoyAxisNames.TryGetValue(joypadMotion.Axis, out string axisName))
+            if (JoyAxisNames.TryGetValue(joypadMotion.Axis, out string? axisName))
                 return axisName;
             switch (joypadMotion.Axis)
             {
@@ -196,7 +196,7 @@ public static class InputEventHelper
         if (@event is InputEventJoypadButton joypadButton)
         {
             string joypadButtonName = "";
-            if (JoypadDpadNames.TryGetValue(joypadButton.ButtonIndex, out string dpadName))
+            if (JoypadDpadNames.TryGetValue(joypadButton.ButtonIndex, out string? dpadName))
                 joypadButtonName = dpadName;
             else if ((int)joypadButton.ButtonIndex < JoypadButtonNameMap[deviceName].Length)
                 joypadButtonName = JoypadButtonNameMap[deviceName][(int)joypadButton.ButtonIndex];

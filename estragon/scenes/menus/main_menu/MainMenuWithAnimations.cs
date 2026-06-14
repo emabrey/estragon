@@ -3,10 +3,10 @@ using Godot;
 /// <summary>Main menu extension that adds options and animates the title and menu fading in.</summary>
 public partial class MainMenuWithAnimations : MainMenu
 {
-    [Export] public PackedScene LevelSelectPackedScene { get; set; }
+    [Export] public PackedScene LevelSelectPackedScene { get; set; } = null!;
     [Export] public bool ConfirmNewGame { get; set; } = true;
 
-    private AnimationNodeStateMachinePlayback _animationStateMachine;
+    private AnimationNodeStateMachinePlayback _animationStateMachine = null!;
 
     private Control ContinueGameButton => GetNode<Control>("%ContinueGameButton");
     private Control LevelSelectButton => GetNode<Control>("%LevelSelectButton");

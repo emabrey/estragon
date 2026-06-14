@@ -32,8 +32,8 @@ public partial class InputOptionsMenu : Control
     }
     private int _remappingMode;
 
-    private string _assignmentPlaceholderText;
-    private string _lastInputReadableName;
+    private string _assignmentPlaceholderText = null!;
+    private string _lastInputReadableName = null!;
 
     private InputActionsList InputActionsList => GetNode<InputActionsList>("%InputActionsList");
     private InputActionsTree InputActionsTree => GetNode<InputActionsTree>("%InputActionsTree");
@@ -52,7 +52,7 @@ public partial class InputOptionsMenu : Control
     private void AddActionEvent()
     {
         var lastInputEvent = KeyAssignmentWindow.LastInputEvent;
-        _lastInputReadableName = KeyAssignmentWindow.LastInputText;
+        _lastInputReadableName = KeyAssignmentWindow.LastInputText ?? "";
         switch (_remappingMode)
         {
             case 0:
@@ -72,12 +72,12 @@ public partial class InputOptionsMenu : Control
     {
         var editingItem = InputActionsTree.EditingItem;
         if (GodotObject.IsInstanceValid(editingItem))
-            RemoveActionEvent(editingItem);
+            RemoveActionEvent(editingItem!);
     }
 
     private void _on_key_assignment_window_confirmed() => AddActionEvent();
 
-    private void OpenKeyAssignmentWindow(string actionName, string readableInputName = null)
+    private void OpenKeyAssignmentWindow(string actionName, string? readableInputName = null)
     {
         readableInputName ??= _assignmentPlaceholderText;
         var window = KeyAssignmentWindow;

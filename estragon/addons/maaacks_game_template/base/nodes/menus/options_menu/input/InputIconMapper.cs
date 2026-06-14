@@ -41,7 +41,7 @@ public partial class InputIconMapper : FileLister
     [ExportGroup("Debug")]
     [Export] public Godot.Collections.Dictionary AllIcons { get; set; } = new();
 
-    private string _lastJoypadDevice;
+    private string? _lastJoypadDevice;
 
     private bool IsEndOfWord(string fullString, string what)
     {
@@ -156,9 +156,9 @@ public partial class InputIconMapper : FileLister
             MatchIconToFile(file);
     }
 
-    public Texture2D GetIcon(InputEvent inputEvent)
+    public Texture2D? GetIcon(InputEvent inputEvent)
     {
-        string specificText = InputEventHelper.GetDeviceSpecificText(inputEvent, _lastJoypadDevice);
+        string specificText = InputEventHelper.GetDeviceSpecificText(inputEvent, _lastJoypadDevice ?? "");
         if (MatchingIcons.ContainsKey(specificText))
             return MatchingIcons[specificText].As<Texture2D>();
         return null;

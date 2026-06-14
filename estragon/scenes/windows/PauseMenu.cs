@@ -4,22 +4,22 @@ using Godot;
 [Tool]
 public partial class PauseMenu : OverlaidWindow
 {
-    [Export] public PackedScene OptionsMenuScene { get; set; }
+    [Export] public PackedScene OptionsMenuScene { get; set; } = null!;
     [Export(PropertyHint.File, "*.tscn")] public string MainMenuScenePath { get; set; } = "";
-    [Export] public NodePath RestartConfirmationNodePath { get; set; }
-    [Export] public NodePath MainMenuConfirmationNodePath { get; set; }
-    [Export] public NodePath ExitConfirmationNodePath { get; set; }
+    [Export] public NodePath RestartConfirmationNodePath { get; set; } = null!;
+    [Export] public NodePath MainMenuConfirmationNodePath { get; set; } = null!;
+    [Export] public NodePath ExitConfirmationNodePath { get; set; } = null!;
     [Export] public NodePath MenuContainerNodePath { get; set; } = "..";
 
-    private ConfirmationOverlaidWindow _restartConfirmation;
-    private ConfirmationOverlaidWindow _mainMenuConfirmation;
-    private ConfirmationOverlaidWindow _exitConfirmation;
-    private Node _menuContainer;
+    private ConfirmationOverlaidWindow _restartConfirmation = null!;
+    private ConfirmationOverlaidWindow _mainMenuConfirmation = null!;
+    private ConfirmationOverlaidWindow _exitConfirmation = null!;
+    private Node _menuContainer = null!;
     private Control OptionsButton => GetNode<Control>("%OptionsButton");
     private Control MainMenuButton => GetNode<Control>("%MainMenuButton");
     private Control ExitButton => GetNode<Control>("%ExitButton");
 
-    private Node _openWindow;
+    private Node? _openWindow;
     private bool _ignoreFirstCancel;
 
     public string GetMainMenuScenePath()

@@ -4,7 +4,7 @@ using Godot;
 [GlobalClass]
 public partial class OverlaidWindowContainer : OverlaidWindow
 {
-    public Node Instance { get; set; }
+    public Node? Instance { get; set; }
 
     protected Container SceneContainer => GetNode<Container>("%SceneContainer");
 
@@ -27,7 +27,7 @@ public partial class OverlaidWindowContainer : OverlaidWindow
             }
         }
     }
-    private PackedScene _packedScene;
+    private PackedScene _packedScene = null!;
 
     public override void _Ready()
     {

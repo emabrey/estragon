@@ -184,7 +184,7 @@ public static class AppSettings
         return fullscreenEnabled;
     }
 
-    public static void SetVsync(DisplayServer.VSyncMode vsyncMode, Window window = null)
+    public static void SetVsync(DisplayServer.VSyncMode vsyncMode, Window? window = null)
     {
         int windowId = 0;
         if (window != null)
@@ -192,7 +192,7 @@ public static class AppSettings
         DisplayServer.WindowSetVsyncMode(vsyncMode, windowId);
     }
 
-    public static DisplayServer.VSyncMode GetVsync(Window window = null)
+    public static DisplayServer.VSyncMode GetVsync(Window? window = null)
     {
         int windowId = 0;
         if (window != null)

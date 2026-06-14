@@ -31,9 +31,6 @@ window/size/viewport_height=720
 
 project/assembly_name="estragon"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg")
 
 [gui]
 
@@ -101,13 +98,6 @@ interact={
 [internationalization]
 
 locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/translations/menus_translations.en.translation", "res://addons/maaacks_game_template/base/translations/menus_translations.fr.translation")
-
-[maaacks_game_template]
-
-copy_path="res://"
-disable_update_check=false
-disable_install_wizard=true
-disable_install_audio_busses=true
 
 [physics]
 

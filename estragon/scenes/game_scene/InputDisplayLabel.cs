@@ -2,7 +2,7 @@ using Godot;
 
 public partial class InputDisplayLabel : Label
 {
-    private Godot.Collections.Array<StringName> _actionNames;
+    private Godot.Collections.Array<StringName> _actionNames = null!;
 
     public override void _Ready() => _actionNames = AppSettings.GetActionNames();
 

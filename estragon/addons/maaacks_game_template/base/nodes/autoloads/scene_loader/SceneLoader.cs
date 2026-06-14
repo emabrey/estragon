@@ -4,7 +4,7 @@ using Godot;
 [GlobalClass]
 public partial class SceneLoader : Node
 {
-    public static SceneLoader Instance { get; private set; }
+    public static SceneLoader Instance { get; private set; } = null!;
 
     [Signal] public delegate void SceneLoadedEventHandler();
 
@@ -22,9 +22,9 @@ public partial class SceneLoader : Node
     [Export] public ResourceLoader.ThreadLoadStatus DebugLockStatus { get; set; }
     [Export(PropertyHint.Range, "0,1")] public float DebugLockProgress { get; set; }
 
-    private PackedScene _loadingScreen;
+    private PackedScene? _loadingScreen;
     private string _scenePath = "";
-    private Resource _loadedResource;
+    private Resource? _loadedResource;
     public bool BackgroundLoading { get; set; }
     private readonly uint _exitHash = 3295764423;
 
@@ -60,7 +60,7 @@ public partial class SceneLoader : Node
         return progressArray.Count > 0 ? progressArray[progressArray.Count - 1].AsSingle() : 0.0f;
     }
 
-    public Resource GetResource()
+    public Resource? GetResource()
     {
         if (!CheckScenePath())
             return null;
@@ -79,7 +79,7 @@ public partial class SceneLoader : Node
     {
         if (DebugEnabled)
             return;
-        Error err = GetTree().ChangeSceneToPacked((PackedScene)GetResource());
+        Error err = GetTree().ChangeSceneToPacked((PackedScene)GetResource()!);
         if (err != Error.Ok)
         {
             GD.PushError($"failed to change scenes: {(int)err}");

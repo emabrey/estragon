@@ -4,8 +4,8 @@ public partial class WinLoseManager : Node
 {
     [Export(PropertyHint.File, "*.tscn")] public string MainMenuScenePath { get; set; } = "";
     [Export(PropertyHint.File, "*.tscn")] public string EndingScenePath { get; set; } = "";
-    [Export] public PackedScene GameWonScene { get; set; }
-    [Export] public PackedScene GameLostScene { get; set; }
+    [Export] public PackedScene? GameWonScene { get; set; }
+    [Export] public PackedScene? GameLostScene { get; set; }
 
     public bool HasLostGame { get; private set; }
     public bool HasWonGame { get; private set; }

@@ -10,15 +10,15 @@ public partial class MainMenu : Control
     [Signal] public delegate void GameExitedEventHandler();
 
     [Export(PropertyHint.File, "*.tscn")] public string GameScenePath { get; set; } = "";
-    [Export] public PackedScene OptionsPackedScene { get; set; }
-    [Export] public PackedScene CreditsPackedScene { get; set; }
+    [Export] public PackedScene OptionsPackedScene { get; set; } = null!;
+    [Export] public PackedScene CreditsPackedScene { get; set; } = null!;
     [Export] public bool ConfirmExit { get; set; } = true;
 
     [ExportGroup("Extra Settings")]
     [Export] public bool SignalGameStart { get; set; }
     [Export] public bool SignalGameExit { get; set; }
 
-    protected Control SubMenu;
+    protected Control? SubMenu;
 
     protected Control MenuContainer => GetNode<Control>("%MenuContainer");
     protected CaptureFocus MenuButtonsBoxContainer => GetNode<CaptureFocus>("%MenuButtonsBoxContainer");

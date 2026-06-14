@@ -6,7 +6,7 @@ public partial class MiniOptionsMenu : Control
     private Control FullscreenControl => GetNode<Control>("%FullscreenControl");
 
     /// <summary>Scene for adjusting the volume of the audio busses.</summary>
-    [Export] public PackedScene AudioControlScene { get; set; }
+    [Export] public PackedScene AudioControlScene { get; set; } = null!;
     /// <summary>Optional names of audio busses that should be ignored.</summary>
     [Export] public Godot.Collections.Array<string> HideBusses { get; set; } = new();
 

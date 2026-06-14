@@ -13,8 +13,8 @@ public partial class KeyAssignmentWindow : ConfirmationOverlaidWindow
 
     [Export] public InputConfirmation Confirmation { get; set; } = InputConfirmation.Single;
 
-    public InputEvent LastInputEvent { get; private set; }
-    public string LastInputText { get; private set; }
+    public InputEvent? LastInputEvent { get; private set; }
+    public string? LastInputText { get; private set; }
     private bool _listening;
     private bool _confirming;
 

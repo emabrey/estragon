@@ -23,59 +23,59 @@ public partial class UISoundController : Node
     private bool _persistent = true;
 
     [ExportGroup("Button Sounds")]
-    [Export] public AudioStream ButtonHovered { get; set; }
-    [Export] public AudioStream ButtonFocused { get; set; }
-    [Export] public AudioStream ButtonPressed { get; set; }
+    [Export] public AudioStream? ButtonHovered { get; set; }
+    [Export] public AudioStream? ButtonFocused { get; set; }
+    [Export] public AudioStream? ButtonPressed { get; set; }
 
     [ExportGroup("TabBar Sounds")]
-    [Export] public AudioStream TabHovered { get; set; }
-    [Export] public AudioStream TabChanged { get; set; }
-    [Export] public AudioStream TabSelected { get; set; }
+    [Export] public AudioStream? TabHovered { get; set; }
+    [Export] public AudioStream? TabChanged { get; set; }
+    [Export] public AudioStream? TabSelected { get; set; }
 
     [ExportGroup("Slider Sounds")]
-    [Export] public AudioStream SliderHovered { get; set; }
-    [Export] public AudioStream SliderFocused { get; set; }
-    [Export] public AudioStream SliderDragStarted { get; set; }
-    [Export] public AudioStream SliderDragEnded { get; set; }
+    [Export] public AudioStream? SliderHovered { get; set; }
+    [Export] public AudioStream? SliderFocused { get; set; }
+    [Export] public AudioStream? SliderDragStarted { get; set; }
+    [Export] public AudioStream? SliderDragEnded { get; set; }
 
     [ExportGroup("LineEdit Sounds")]
-    [Export] public AudioStream LineHovered { get; set; }
-    [Export] public AudioStream LineFocused { get; set; }
-    [Export] public AudioStream LineTextChanged { get; set; }
-    [Export] public AudioStream LineTextSubmitted { get; set; }
-    [Export] public AudioStream LineTextChangeRejected { get; set; }
+    [Export] public AudioStream? LineHovered { get; set; }
+    [Export] public AudioStream? LineFocused { get; set; }
+    [Export] public AudioStream? LineTextChanged { get; set; }
+    [Export] public AudioStream? LineTextSubmitted { get; set; }
+    [Export] public AudioStream? LineTextChangeRejected { get; set; }
 
     [ExportGroup("ItemList Sounds")]
-    [Export] public AudioStream ItemListSelected { get; set; }
-    [Export] public AudioStream ItemListActivated { get; set; }
+    [Export] public AudioStream? ItemListSelected { get; set; }
+    [Export] public AudioStream? ItemListActivated { get; set; }
 
     [ExportGroup("Tree Sounds")]
-    [Export] public AudioStream TreeItemSelected { get; set; }
-    [Export] public AudioStream TreeItemActivated { get; set; }
-    [Export] public AudioStream TreeButtonClicked { get; set; }
+    [Export] public AudioStream? TreeItemSelected { get; set; }
+    [Export] public AudioStream? TreeItemActivated { get; set; }
+    [Export] public AudioStream? TreeButtonClicked { get; set; }
 
-    private Node _rootNode;
+    private Node _rootNode = null!;
 
-    private AudioStreamPlayer _buttonHoveredPlayer;
-    private AudioStreamPlayer _buttonFocusedPlayer;
-    private AudioStreamPlayer _buttonPressedPlayer;
-    private AudioStreamPlayer _tabHoveredPlayer;
-    private AudioStreamPlayer _tabChangedPlayer;
-    private AudioStreamPlayer _tabSelectedPlayer;
-    private AudioStreamPlayer _sliderHoveredPlayer;
-    private AudioStreamPlayer _sliderFocusedPlayer;
-    private AudioStreamPlayer _sliderDragStartedPlayer;
-    private AudioStreamPlayer _sliderDragEndedPlayer;
-    private AudioStreamPlayer _lineHoveredPlayer;
-    private AudioStreamPlayer _lineFocusedPlayer;
-    private AudioStreamPlayer _lineTextChangedPlayer;
-    private AudioStreamPlayer _lineTextSubmittedPlayer;
-    private AudioStreamPlayer _lineTextChangeRejectedPlayer;
-    private AudioStreamPlayer _itemListActivatedPlayer;
-    private AudioStreamPlayer _itemListSelectedPlayer;
-    private AudioStreamPlayer _treeItemActivatedPlayer;
-    private AudioStreamPlayer _treeItemSelectedPlayer;
-    private AudioStreamPlayer _treeButtonClickedPlayer;
+    private AudioStreamPlayer? _buttonHoveredPlayer;
+    private AudioStreamPlayer? _buttonFocusedPlayer;
+    private AudioStreamPlayer? _buttonPressedPlayer;
+    private AudioStreamPlayer? _tabHoveredPlayer;
+    private AudioStreamPlayer? _tabChangedPlayer;
+    private AudioStreamPlayer? _tabSelectedPlayer;
+    private AudioStreamPlayer? _sliderHoveredPlayer;
+    private AudioStreamPlayer? _sliderFocusedPlayer;
+    private AudioStreamPlayer? _sliderDragStartedPlayer;
+    private AudioStreamPlayer? _sliderDragEndedPlayer;
+    private AudioStreamPlayer? _lineHoveredPlayer;
+    private AudioStreamPlayer? _lineFocusedPlayer;
+    private AudioStreamPlayer? _lineTextChangedPlayer;
+    private AudioStreamPlayer? _lineTextSubmittedPlayer;
+    private AudioStreamPlayer? _lineTextChangeRejectedPlayer;
+    private AudioStreamPlayer? _itemListActivatedPlayer;
+    private AudioStreamPlayer? _itemListSelectedPlayer;
+    private AudioStreamPlayer? _treeItemActivatedPlayer;
+    private AudioStreamPlayer? _treeItemSelectedPlayer;
+    private AudioStreamPlayer? _treeButtonClickedPlayer;
 
     private readonly HashSet<(ulong, string)> _connected = new();
 
@@ -90,9 +90,9 @@ public partial class UISoundController : Node
             tree.NodeAdded -= ConnectUiSounds;
     }
 
-    private AudioStreamPlayer BuildStreamPlayer(AudioStream stream, string streamName = "")
+    private AudioStreamPlayer? BuildStreamPlayer(AudioStream? stream, string streamName = "")
     {
-        AudioStreamPlayer streamPlayer = null;
+        AudioStreamPlayer? streamPlayer = null;
         if (stream != null)
         {
             streamPlayer = new AudioStreamPlayer
@@ -130,14 +130,14 @@ public partial class UISoundController : Node
         _treeButtonClickedPlayer = BuildStreamPlayer(TreeButtonClicked, "TreeButtonClicked");
     }
 
-    private void PlayStream(AudioStreamPlayer streamPlayer)
+    private void PlayStream(AudioStreamPlayer? streamPlayer)
     {
         if (streamPlayer == null || !streamPlayer.IsInsideTree())
             return;
         streamPlayer.Play();
     }
 
-    private void ConnectSound(Node node, AudioStreamPlayer streamPlayer, StringName signalName, Callable callable)
+    private void ConnectSound(Node node, AudioStreamPlayer? streamPlayer, StringName signalName, Callable callable)
     {
         if (streamPlayer == null)
             return;

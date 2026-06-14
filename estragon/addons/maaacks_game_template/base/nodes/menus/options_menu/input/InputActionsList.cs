@@ -77,7 +77,7 @@ public partial class InputActionsList : Container
     [Export] public Vector2 ButtonMinimumSize { get; set; }
 
     [ExportGroup("Icons")]
-    [Export] public InputIconMapper InputIconMapper { get; set; }
+    [Export] public InputIconMapper InputIconMapper { get; set; } = null!;
     [Export] public bool ExpandIcon { get; set; }
 
     [ExportGroup("Built-in Actions")]
@@ -93,7 +93,7 @@ public partial class InputActionsList : Container
     private readonly Dictionary<string, string> _assignedInputEvents = new();
     private string _editingActionName = "";
     private int _editingActionGroup;
-    private string _lastInputReadableName;
+    private string _lastInputReadableName = null!;
 
     private BoxContainer ParentBoxContainer => GetNode<BoxContainer>("%ParentBoxContainer");
     private BoxContainer ActionBoxContainer => GetNode<BoxContainer>("%ActionBoxContainer");
@@ -133,9 +133,9 @@ public partial class InputActionsList : Container
     {
         _editingActionName = actionName;
         _editingActionGroup = actionGroup;
-        Button button = GetButtonByAction(actionName, actionGroup);
+        Button? button = GetButtonByAction(actionName, actionGroup);
         string readableInputName = "";
-        if (button != null && _buttonReadableInputMap.TryGetValue(button, out string mapped))
+        if (button != null && _buttonReadableInputMap.TryGetValue(button, out string? mapped))
             readableInputName = mapped;
         ReplaceAction(actionName, readableInputName);
     }
@@ -193,16 +193,16 @@ public partial class InputActionsList : Container
     private void AddToActionButtonMap(string actionName, int actionGroup, Button buttonNode)
         => _actionButtonMap[KeyString(actionName, actionGroup)] = buttonNode;
 
-    private Button GetButtonByAction(string actionName, int actionGroup)
+    private Button? GetButtonByAction(string actionName, int actionGroup)
     {
-        if (_actionButtonMap.TryGetValue(KeyString(actionName, actionGroup), out Button button))
+        if (_actionButtonMap.TryGetValue(KeyString(actionName, actionGroup), out Button? button))
             return button;
         return null;
     }
 
     private void UpdateNextButtonDisabledState(string actionName, int actionGroup, bool disabled = false)
     {
-        Button button = GetButtonByAction(actionName, actionGroup + 1);
+        Button? button = GetButtonByAction(actionName, actionGroup + 1);
         if (button != null)
             button.Disabled = disabled;
     }
@@ -210,13 +210,13 @@ public partial class InputActionsList : Container
     private void UpdateAssignedInputsAndButton(string actionName, int actionGroup, InputEvent inputEvent)
     {
         string newReadableInputName = InputEventHelper.GetText(inputEvent);
-        Button button = GetButtonByAction(actionName, actionGroup);
+        Button? button = GetButtonByAction(actionName, actionGroup);
         if (button == null)
             return;
-        Texture2D icon = InputIconMapper?.GetIcon(inputEvent);
+        Texture2D? icon = InputIconMapper?.GetIcon(inputEvent);
         button.Icon = icon;
         button.Text = button.Icon == null ? newReadableInputName : "";
-        if (_buttonReadableInputMap.TryGetValue(button, out string oldReadableInputName))
+        if (_buttonReadableInputMap.TryGetValue(button, out string? oldReadableInputName))
             _assignedInputEvents.Remove(oldReadableInputName);
         _buttonReadableInputMap[button] = newReadableInputName;
         _assignedInputEvents[newReadableInputName] = actionName;
@@ -224,12 +224,12 @@ public partial class InputActionsList : Container
 
     private void ClearButton(string actionName, int actionGroup)
     {
-        Button button = GetButtonByAction(actionName, actionGroup);
+        Button? button = GetButtonByAction(actionName, actionGroup);
         if (button == null)
             return;
         button.Icon = null;
         button.Text = EmptyInputActionString;
-        if (_buttonReadableInputMap.TryGetValue(button, out string oldReadableInputName))
+        if (_buttonReadableInputMap.TryGetValue(button, out string? oldReadableInputName))
             _assignedInputEvents.Remove(oldReadableInputName);
         _buttonReadableInputMap[button] = EmptyInputActionString;
     }
@@ -265,14 +265,14 @@ public partial class InputActionsList : Container
         newActionBox.GetChild<Label>(0).Text = readableActionName;
         for (int groupIter = 0; groupIter < ActionGroups; groupIter++)
         {
-            InputEvent inputEvent = null;
+            InputEvent? inputEvent = null;
             if (groupIter < inputEvents.Count)
                 inputEvent = inputEvents[groupIter];
-            string text = InputEventHelper.GetText(inputEvent);
+            string text = InputEventHelper.GetText(inputEvent!);
             bool isDisabled = groupIter > inputEvents.Count;
             if (string.IsNullOrEmpty(text))
                 text = EmptyInputActionString;
-            Texture2D icon = InputIconMapper?.GetIcon(inputEvent);
+            Texture2D? icon = InputIconMapper?.GetIcon(inputEvent!);
             Variant content = icon != null ? icon : text;
             Button button = AddNewButton(content, newActionBox, isDisabled);
             ConnectButtonAndAddToMaps(button, text, actionName, groupIter);
@@ -370,12 +370,12 @@ public partial class InputActionsList : Container
 
     private string GetActionForInputEvent(InputEvent inputEvent)
     {
-        if (_assignedInputEvents.TryGetValue(InputEventHelper.GetText(inputEvent), out string action))
+        if (_assignedInputEvents.TryGetValue(InputEventHelper.GetText(inputEvent), out string? action))
             return action;
         return "";
     }
 
-    public void AddActionEvent(string lastInputText, InputEvent lastInputEvent)
+    public void AddActionEvent(string lastInputText, InputEvent? lastInputEvent)
     {
         _lastInputReadableName = lastInputText;
         if (lastInputEvent != null)

@@ -16,7 +16,7 @@ public partial class Opening : Control
     [Export] public float EndDelay { get; set; } = 0.5f;
     [Export] public bool ShowLoadingScreen { get; set; }
 
-    private Tween _tween;
+    private Tween? _tween;
     private int _nextImageIndex;
 
     private Container ImagesContainer => GetNode<Container>("%ImagesContainer");

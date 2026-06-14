@@ -5,8 +5,8 @@ public static class GlobalState
     public const string SaveStatePath = "user://global_state.tres";
     public const string NoVersionName = "0.0.0";
 
-    public static GlobalStateData Current { get; set; }
-    public static string CurrentVersion { get; set; }
+    public static GlobalStateData? Current { get; set; }
+    public static string? CurrentVersion { get; set; }
 
     private static void LogOpened()
     {
@@ -50,7 +50,7 @@ public static class GlobalState
     public static bool HasState(string stateKey)
         => Current != null && Current.HasState(stateKey);
 
-    public static T GetOrCreateState<T>(string stateKey) where T : Resource, new()
+    public static T? GetOrCreateState<T>(string stateKey) where T : Resource, new()
         => Current?.GetOrCreateState<T>(stateKey);
 
     public static void Reset()

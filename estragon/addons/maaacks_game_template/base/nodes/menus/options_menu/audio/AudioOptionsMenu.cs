@@ -3,7 +3,7 @@ using Godot;
 /// <summary>Scene for adjusting the volume of the audio busses.</summary>
 public partial class AudioOptionsMenu : Control
 {
-    [Export] public PackedScene AudioControlScene { get; set; }
+    [Export] public PackedScene AudioControlScene { get; set; } = null!;
     [Export] public Godot.Collections.Array<string> HideBusses { get; set; } = new();
 
     private Control MuteControl => GetNode<Control>("%MuteControl");

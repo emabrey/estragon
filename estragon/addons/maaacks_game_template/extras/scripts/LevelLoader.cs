@@ -9,11 +9,11 @@ public partial class LevelLoader : Node
     [Signal] public delegate void LevelLoadedEventHandler();
     [Signal] public delegate void LevelReadyEventHandler();
 
-    [Export] public Node LevelContainer { get; set; }
-    [Export] public LoadingScreen LevelLoadingScreen { get; set; }
+    [Export] public Node LevelContainer { get; set; } = null!;
+    [Export] public LoadingScreen LevelLoadingScreen { get; set; } = null!;
 
     [ExportGroup("Debugging")]
-    [Export] public Node CurrentLevel { get; set; }
+    [Export] public Node? CurrentLevel { get; set; }
 
     public string CurrentLevelPath { get; private set; } = "";
     public bool IsLoading { get; private set; }
@@ -43,10 +43,10 @@ public partial class LevelLoader : Node
         EmitSignal(SignalName.LevelLoadStarted);
         await ToSignal(SceneLoader.Instance, SceneLoader.SignalName.SceneLoaded);
         IsLoading = false;
-        CurrentLevel = AttachLevel(SceneLoader.Instance.GetResource());
+        CurrentLevel = AttachLevel(SceneLoader.Instance.GetResource()!);
         LevelLoadingScreen?.Close();
         EmitSignal(SignalName.LevelLoaded);
-        await ToSignal(CurrentLevel, Node.SignalName.Ready);
+        await ToSignal(CurrentLevel!, Node.SignalName.Ready);
         EmitSignal(SignalName.LevelReady);
     }
 }

@@ -6,7 +6,7 @@ public partial class LoadingScreenWithShaderCaching : LoadingScreen
 {
     [Export(PropertyHint.Dir)] public string SpatialShaderMaterialDir { get; set; } = "";
     [Export(PropertyHint.File, "*.tscn")] public string CacheShadersScene { get; set; } = "";
-    [Export] public Mesh Mesh { get; set; }
+    [Export] public Mesh Mesh { get; set; } = null!;
 
     [ExportGroup("Advanced")]
     [Export] public Godot.Collections.Array<string> MatchingExtensions { get; set; } = new() { ".tres", ".material", ".res" };

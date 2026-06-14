@@ -4,19 +4,19 @@ using Godot;
 [GlobalClass]
 public partial class LevelManager : Node
 {
-    [Export] public LevelLoader LevelLoader { get; set; }
+    [Export] public LevelLoader LevelLoader { get; set; } = null!;
     [Export(PropertyHint.File)] public string StartingLevelPath { get; set; } = "";
-    [Export] public SceneLister SceneLister { get; set; }
+    [Export] public SceneLister SceneLister { get; set; } = null!;
     [Export] public bool AutoLoad { get; set; } = true;
 
     [ExportGroup("Scenes")]
     [Export(PropertyHint.File, "*.tscn")] public string MainMenuScenePath { get; set; } = "";
     [Export(PropertyHint.File, "*.tscn")] public string EndingScenePath { get; set; } = "";
-    [Export] public PackedScene GameWonScene { get; set; }
-    [Export] public PackedScene LevelLostScene { get; set; }
-    [Export] public PackedScene LevelWonScene { get; set; }
+    [Export] public PackedScene? GameWonScene { get; set; }
+    [Export] public PackedScene? LevelLostScene { get; set; }
+    [Export] public PackedScene? LevelWonScene { get; set; }
 
-    public Node CurrentLevel { get; set; }
+    public Node? CurrentLevel { get; set; }
 
     private string _currentLevelPath = "";
     public string CurrentLevelPath
@@ -43,7 +43,7 @@ public partial class LevelManager : Node
     }
 
     private void TryConnectingSignalToLevel(StringName signalName, Callable callable)
-        => TryConnectingSignalToNode(CurrentLevel, signalName, callable);
+        => TryConnectingSignalToNode(CurrentLevel!, signalName, callable);
 
     public string GetMainMenuScenePath()
     {
@@ -201,7 +201,7 @@ public partial class LevelManager : Node
     private async void OnLevelLoaderLevelLoaded()
     {
         CurrentLevel = LevelLoader.CurrentLevel;
-        await ToSignal(CurrentLevel, Node.SignalName.Ready);
+        await ToSignal(CurrentLevel!, Node.SignalName.Ready);
         ConnectLevelSignals();
     }
 

@@ -12,11 +12,11 @@ public partial class GameState : Resource
     [Export] public int PlayTime { get; set; }
     [Export] public int TotalTime { get; set; }
 
-    public static LevelState GetLevelState(string levelStateKey)
+    public static LevelState? GetLevelState(string levelStateKey)
     {
         if (!HasGameState())
             return null;
-        var gameState = GetOrCreateState();
+        var gameState = GetOrCreateState()!;
         if (string.IsNullOrEmpty(levelStateKey))
             return null;
         if (gameState.LevelStates.ContainsKey(levelStateKey))
@@ -29,32 +29,33 @@ public partial class GameState : Resource
 
     public static bool HasGameState() => GlobalState.HasState(StateName);
 
-    public static GameState GetOrCreateState() => GlobalState.GetOrCreateState<GameState>(StateName);
+    public static GameState? GetOrCreateState() => GlobalState.GetOrCreateState<GameState>(StateName);
+
 
     public static string GetCurrentLevelPath()
     {
         if (!HasGameState())
             return "";
-        return GetOrCreateState().CurrentLevelPath;
+        return GetOrCreateState()!.CurrentLevelPath;
     }
 
     public static string GetCheckpointLevelPath()
     {
         if (!HasGameState())
             return "";
-        return GetOrCreateState().CheckpointLevelPath;
+        return GetOrCreateState()!.CheckpointLevelPath;
     }
 
     public static int GetLevelsReached()
     {
         if (!HasGameState())
             return 0;
-        return GetOrCreateState().LevelStates.Count;
+        return GetOrCreateState()!.LevelStates.Count;
     }
 
     public static void SetCheckpointLevelPath(string levelPath)
     {
-        var gameState = GetOrCreateState();
+        var gameState = GetOrCreateState()!;
         gameState.CheckpointLevelPath = levelPath;
         GetLevelState(levelPath);
         GlobalState.Save();
@@ -62,28 +63,28 @@ public partial class GameState : Resource
 
     public static void SetCurrentLevelPath(string levelPath)
     {
-        var gameState = GetOrCreateState();
+        var gameState = GetOrCreateState()!;
         gameState.CurrentLevelPath = levelPath;
         GlobalState.Save();
     }
 
     public static void StartGame()
     {
-        var gameState = GetOrCreateState();
+        var gameState = GetOrCreateState()!;
         gameState.TotalGamesPlayed += 1;
         GlobalState.Save();
     }
 
     public static void ContinueGame()
     {
-        var gameState = GetOrCreateState();
+        var gameState = GetOrCreateState()!;
         gameState.CurrentLevelPath = gameState.CheckpointLevelPath;
         GlobalState.Save();
     }
 
     public static void Reset()
     {
-        var gameState = GetOrCreateState();
+        var gameState = GetOrCreateState()!;
         gameState.LevelStates.Clear();
         gameState.CurrentLevelPath = "";
         gameState.CheckpointLevelPath = "";

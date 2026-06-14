@@ -23,6 +23,7 @@ public partial class GameTimer : Node
     public override void _ExitTree()
     {
         var gameState = GameState.GetOrCreateState();
+        if (gameState == null) return;
         gameState.PlayTime += _playTime;
         gameState.TotalTime += _totalTime;
         GlobalState.Save();

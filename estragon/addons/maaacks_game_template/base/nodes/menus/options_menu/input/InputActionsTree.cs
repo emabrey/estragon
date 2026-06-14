@@ -59,9 +59,9 @@ public partial class InputActionsTree : Tree
     [Export] public bool ShowAllActions { get; set; } = true;
 
     [ExportGroup("Icons")]
-    [Export] public Texture2D AddButtonTexture { get; set; }
-    [Export] public Texture2D RemoveButtonTexture { get; set; }
-    [Export] public InputIconMapper InputIconMapper { get; set; }
+    [Export] public Texture2D AddButtonTexture { get; set; } = null!;
+    [Export] public Texture2D RemoveButtonTexture { get; set; } = null!;
+    [Export] public InputIconMapper InputIconMapper { get; set; } = null!;
 
     [ExportGroup("Built-in Actions")]
     [Export] public bool ShowBuiltInActions { get; set; }
@@ -76,8 +76,8 @@ public partial class InputActionsTree : Tree
     private readonly Dictionary<TreeItem, string> _treeItemActionMap = new();
     private readonly Dictionary<string, string> _assignedInputEvents = new();
     private string _editingActionName = "";
-    public TreeItem EditingItem { get; private set; }
-    private string _lastInputReadableName;
+    public TreeItem? EditingItem { get; private set; }
+    private string _lastInputReadableName = null!;
 
     private void RefreshReadableActionNames()
     {
@@ -101,7 +101,7 @@ public partial class InputActionsTree : Tree
     private void AddInputEventAsTreeItem(string actionName, InputEvent inputEvent, TreeItem parentItem)
     {
         TreeItem inputTreeItem = CreateItem(parentItem);
-        Texture2D icon = InputIconMapper?.GetIcon(inputEvent);
+        Texture2D? icon = InputIconMapper?.GetIcon(inputEvent);
         if (icon != null)
             inputTreeItem.SetIcon(0, icon);
         inputTreeItem.SetText(0, InputEventHelper.GetText(inputEvent));
@@ -185,7 +185,7 @@ public partial class InputActionsTree : Tree
         InputMap.ActionAddEvent(actionName, inputEvent);
         var actionEvents = InputMap.ActionGetEvents(actionName);
         AppSettings.SetConfigInputEvents(actionName, (Godot.Collections.Array)actionEvents);
-        AddInputEventAsTreeItem(actionName, inputEvent, EditingItem);
+        AddInputEventAsTreeItem(actionName, inputEvent, EditingItem!);
     }
 
     private bool CanRemoveInputEvent(string actionName)
@@ -212,12 +212,12 @@ public partial class InputActionsTree : Tree
 
     private string GetActionForInputEvent(InputEvent inputEvent)
     {
-        if (_assignedInputEvents.TryGetValue(InputEventHelper.GetText(inputEvent), out string action))
+        if (_assignedInputEvents.TryGetValue(InputEventHelper.GetText(inputEvent), out string? action))
             return action;
         return "";
     }
 
-    public void AddActionEvent(string lastInputText, InputEvent lastInputEvent)
+    public void AddActionEvent(string lastInputText, InputEvent? lastInputEvent)
     {
         _lastInputReadableName = lastInputText;
         if (lastInputEvent != null)

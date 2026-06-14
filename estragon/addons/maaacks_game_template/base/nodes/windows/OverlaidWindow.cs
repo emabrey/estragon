@@ -22,10 +22,10 @@ public partial class OverlaidWindow : WindowContainer
 
     private bool _initialPauseState;
     private Input.MouseModeEnum _initialMouseMode;
-    private Control _initialFocusControl;
+    private Control? _initialFocusControl;
     private readonly Godot.Collections.Dictionary _initialNodeFocusModes = new();
-    protected SceneTree _sceneTree;
-    private ColorRect _exclusiveControlNode;
+    protected SceneTree _sceneTree = null!;
+    private ColorRect? _exclusiveControlNode;
     private bool _visibilityConnected;
 
     private void SetFocusNone(Node node)
@@ -76,7 +76,7 @@ public partial class OverlaidWindow : WindowContainer
         _initialFocusControl?.ReleaseFocus();
         if (Engine.IsEditorHint())
             return;
-        _sceneTree.Paused = PausesGame || _initialPauseState;
+        _sceneTree!.Paused = PausesGame || _initialPauseState;
         if (MakesMouseVisible)
             Input.MouseMode = Input.MouseModeEnum.Visible;
         if (Exclusive)

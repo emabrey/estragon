@@ -16,6 +16,7 @@ public partial class LevelSelectMenu : Control
         LevelButtonsContainer.Clear();
         _levelPaths.Clear();
         var gameState = GameState.GetOrCreateState();
+        if (gameState == null) return;
         foreach (Variant key in gameState.LevelStates.Keys)
         {
             string filePath = key.AsString();
