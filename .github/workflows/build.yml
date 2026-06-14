@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  setup:
+    name: Generate shared security parameters
+    runs-on: ubuntu-latest
+    outputs:
+      security-token: ${{ steps.gen.outputs.security-token }}
+    steps:
+      - name: Download Godot Secure script
+        run: |
+          curl -fL --retry 5 --retry-delay 10 \
+            "https://github.com/emabrey/Godot-Secure/releases/download/v1.4.0/godot_secure.py" \
+            -o godot_secure.py
+      - name: Generate security token
+        id: gen
+        run: python3 godot_secure.py --mode generate --non-interactive
+
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    needs: [setup]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Build Godot Secure
+        id: godot-secure
+        uses: emabrey/GodotSecureAction@v1
+        with:
+          godot-version:  '4.6-stable'
+          algorithm:      aes
+          encryption-key: ${{ secrets.GODOT_ENCRYPTION_KEY }}
+          security-token: ${{ needs.setup.outputs.security-token }}
+          lto:            full
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-secure-aes-${{ runner.os }}
+          path: godot-source/bin/godot.*
