@@ -135,4 +135,6 @@ vendored_godot_build.ps1         Developer build script
 
 ## License
 
-See [estragon/addons/maaacks_game_template/LICENSE.txt](estragon/addons/maaacks_game_template/LICENSE.txt) for the maaacks_game_template license.
+Estragon is released under the [MIT License](LICENSE). Copyright (c) 2026 Emily Mabrey.
+
+The bundled maaacks_game_template addon is under its own license. See [estragon/addons/maaacks_game_template/LICENSE.txt](estragon/addons/maaacks_game_template/LICENSE.txt).
