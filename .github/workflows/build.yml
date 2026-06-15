@@ -59,14 +59,41 @@ jobs:
           security-token: ${{ needs.setup.outputs.security-token }}
           lto:            full
 
-      - name: Patch export preset template paths
+      - name: Locate Godot binaries
+        shell: bash
         run: |
-          python3 - <<'EOF'
+          bin="godot-source/bin"
+
+          # macOS editor lives inside a .app bundle
+          if [ -f "$bin/Godot.app/Contents/MacOS/Godot" ]; then
+            editor="$(pwd)/$bin/Godot.app/Contents/MacOS/Godot"
+          else
+            editor=$(find "$bin" -maxdepth 1 -name 'godot.*.editor.*' \
+                      ! -name '*.o' ! -name '*.debug' | head -1)
+            editor="$(pwd)/$editor"
+          fi
+
+          release=$(find "$bin" -maxdepth 1 -name 'godot.*.template_release.*' \
+                    ! -name '*.o' ! -name '*.debug' | head -1)
+          debug=$(find "$bin" -maxdepth 1 -name 'godot.*.template_debug.*' \
+                  ! -name '*.o' ! -name '*.debug' | head -1)
+
+          echo "GODOT_EDITOR=$editor"                >> "$GITHUB_ENV"
+          echo "GODOT_TEMPLATE_RELEASE=$(pwd)/$release" >> "$GITHUB_ENV"
+          echo "GODOT_TEMPLATE_DEBUG=$(pwd)/$debug"  >> "$GITHUB_ENV"
+
+          echo "Editor:           $editor"
+          echo "Template release: $(pwd)/$release"
+          echo "Template debug:   $(pwd)/$debug"
+
+      - name: Patch export preset template paths
+        shell: bash
+        run: |
+          python3 - "$GODOT_TEMPLATE_RELEASE" "$GODOT_TEMPLATE_DEBUG" <<'EOF'
           import re, sys
 
+          release, debug = sys.argv[1], sys.argv[2]
           cfg = "estragon/export_presets.cfg"
-          release = r"${{ steps.godot-secure.outputs.template-release-path }}"
-          debug   = r"${{ steps.godot-secure.outputs.template-debug-path }}"
 
           with open(cfg) as f:
               content = f.read()
@@ -79,23 +106,25 @@ jobs:
           EOF
 
       - name: Create export output directory
+        shell: bash
         run: mkdir export
 
       - name: Export release build
+        shell: bash
+        working-directory: estragon
         run: |
-          "${{ steps.godot-secure.outputs.editor-path }}" --headless \
+          chmod +x "$GODOT_EDITOR" || true
+          "$GODOT_EDITOR" --headless \
             --export-release "${{ matrix.preset }}" \
             "${{ github.workspace }}/export/${{ matrix.release-name }}"
-        working-directory: estragon
-        shell: bash
 
       - name: Export debug build
+        shell: bash
+        working-directory: estragon
         run: |
-          "${{ steps.godot-secure.outputs.editor-path }}" --headless \
+          "$GODOT_EDITOR" --headless \
             --export-debug "${{ matrix.preset }}" \
             "${{ github.workspace }}/export/${{ matrix.debug-name }}"
-        working-directory: estragon
-        shell: bash
 
       - name: Upload estragon artifact
         uses: actions/upload-artifact@v4
