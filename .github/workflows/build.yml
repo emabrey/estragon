@@ -170,13 +170,14 @@ jobs:
               mkdir -p "$WORKDIR/Contents/MacOS"
               mkdir -p "$WORKDIR/Contents/Resources"
 
-              cat > "$WORKDIR/Contents/Info.plist" << 'PLIST'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
+              python3 -c "
+import pathlib
+pathlib.Path('$WORKDIR/Contents/Info.plist').write_text('''<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
 <dict>
   <key>CFBundleExecutable</key>
-  <string>$GODOT_MACOS_BUNDLE_BINARY</string>
+  <string>\$GODOT_MACOS_BUNDLE_BINARY</string>
   <key>CFBundleIdentifier</key>
   <string>com.example.game</string>
   <key>CFBundleName</key>
@@ -192,9 +193,9 @@ jobs:
   <key>LSMinimumSystemVersion</key>
   <string>10.13</string>
 </dict>
-</plist>
-PLIST
-              printf 'APPL????' > "$WORKDIR/Contents/PkgInfo"
+</plist>''')
+pathlib.Path('$WORKDIR/Contents/PkgInfo').write_bytes(b'APPL????')
+"
 
               cp "$release" "$WORKDIR/Contents/MacOS/godot_macos_release.arm64"
               cp "$debug"   "$WORKDIR/Contents/MacOS/godot_macos_debug.arm64"
