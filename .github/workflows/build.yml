@@ -36,8 +36,8 @@ jobs:
             debug-name: estragon_debug.exe
             scons-platform: platform=windows
             scons-arch: arch=x86_64
-            # use_llvm=no: Windows Server 2025 runners default to LLVM but it
-            # hits a COMDAT linker bug; MSVC produces a clean build.
+            # use_llvm=no: Windows Server 2025 runners default to LLVM but
+            # it hits a COMDAT linker bug; MSVC produces a clean build.
             extra-scons-args: 'module_mono_enabled=yes use_llvm=no'
           - os: ubuntu-latest
             preset: "Linux"
@@ -67,7 +67,7 @@ jobs:
           dotnet nuget add source "$HOME/.godotnuget" --name GodotNuget 2>/dev/null || true
 
       # Build only the editor first so we can run --generate-mono-glue before
-      # the templates are compiled (required for module_mono_enabled=yes builds).
+      # templates are compiled (required for module_mono_enabled=yes builds).
       - name: Build Godot Secure editor
         id: godot-secure
         uses: emabrey/GodotSecureAction@v1
@@ -80,7 +80,7 @@ jobs:
           extra-scons-args: ${{ matrix.extra-scons-args }}
 
       - name: Locate editor binary
-        id: find-bins
+        id: find-editor
         shell: bash
         run: |
           src="${{ steps.godot-secure.outputs.godot-source-path }}"
@@ -95,30 +95,29 @@ jobs:
           fi
 
           chmod +x "$editor" || true
-          echo "editor=$editor" >> "$GITHUB_OUTPUT"
-          echo "source=$src"    >> "$GITHUB_OUTPUT"
+          echo "editor=$editor"   >> "$GITHUB_OUTPUT"
+          echo "source=$src"      >> "$GITHUB_OUTPUT"
           echo "Editor: $editor"
 
       - name: Generate Mono glue
         shell: bash
         run: |
-          "${{ steps.find-bins.outputs.editor }}" --headless \
+          "${{ steps.find-editor.outputs.editor }}" --headless \
             --generate-mono-glue \
-            "${{ steps.find-bins.outputs.source }}/modules/mono/glue"
+            "${{ steps.find-editor.outputs.source }}/modules/mono/glue"
 
       - name: Build GodotSharp assemblies
         shell: bash
-        working-directory: ${{ steps.find-bins.outputs.source }}
+        working-directory: ${{ steps.find-editor.outputs.source }}
         run: |
           python3 modules/mono/build_scripts/build_assemblies.py \
             --godot-output-dir ./bin --push-nupkgs-local GodotNuget
 
-      # Now build both export templates against the already-patched source.
-      # SCRIPT_AES256_ENCRYPTION_KEY is required so SCons embeds the same key
-      # that was used for the editor build.
+      # Build both export templates against the already-patched source.
+      # SCRIPT_AES256_ENCRYPTION_KEY embeds the same key used for the editor.
       - name: Build export templates
         shell: bash
-        working-directory: ${{ steps.find-bins.outputs.source }}
+        working-directory: ${{ steps.find-editor.outputs.source }}
         env:
           SCRIPT_AES256_ENCRYPTION_KEY: ${{ secrets.GODOT_ENCRYPTION_KEY }}
         run: |
@@ -127,43 +126,70 @@ jobs:
           scons target=template_debug ${{ matrix.scons-platform }} ${{ matrix.scons-arch }} \
             ${{ matrix.extra-scons-args }}
 
-      - name: Locate export template binaries
-        id: find-templates
+      - name: Install export templates
         shell: bash
         run: |
-          bin="${{ steps.find-bins.outputs.source }}/bin"
+          src="${{ steps.find-editor.outputs.source }}"
+          bin="$src/bin"
 
-          release=$(find "$bin" -maxdepth 1 \
-            -name 'godot.*.template_release.*' ! -name '*.o' ! -name '*.debug' \
-            | head -1)
-          debug=$(find "$bin" -maxdepth 1 \
-            -name 'godot.*.template_debug.*' ! -name '*.o' ! -name '*.debug' \
-            | head -1)
+          # Godot template directory name encodes version + mono variant
+          GODOT_VER="4.6.stable.mono"
 
-          echo "release=$release" >> "$GITHUB_OUTPUT"
-          echo "debug=$debug"     >> "$GITHUB_OUTPUT"
-          echo "Template release: $release"
-          echo "Template debug:   $debug"
+          case "$RUNNER_OS" in
+            Linux)
+              TEMPLATES_DIR="$HOME/.local/share/godot/export_templates/$GODOT_VER"
+              mkdir -p "$TEMPLATES_DIR"
+              release=$(find "$bin" -maxdepth 1 \
+                -name 'godot.*.template_release.*' ! -name '*.o' ! -name '*.debug' \
+                | head -1)
+              debug=$(find "$bin" -maxdepth 1 \
+                -name 'godot.*.template_debug.*' ! -name '*.o' ! -name '*.debug' \
+                | head -1)
+              cp "$release" "$TEMPLATES_DIR/linux_release.x86_64"
+              cp "$debug"   "$TEMPLATES_DIR/linux_debug.x86_64"
+              echo "Installed Linux templates to $TEMPLATES_DIR"
+              ;;
 
-      - name: Patch export preset template paths
-        shell: bash
-        run: |
-          python3 - "${{ steps.find-templates.outputs.release }}" \
-                     "${{ steps.find-templates.outputs.debug }}" <<'EOF'
-          import re, sys
+            macOS)
+              TEMPLATES_DIR="$HOME/Library/Application Support/Godot/export_templates/$GODOT_VER"
+              mkdir -p "$TEMPLATES_DIR"
 
-          release, debug = sys.argv[1], sys.argv[2]
-          cfg = "estragon/export_presets.cfg"
+              release=$(find "$bin" -maxdepth 1 \
+                -name 'godot.*.template_release.*' ! -name '*.o' ! -name '*.debug' \
+                | head -1)
+              debug=$(find "$bin" -maxdepth 1 \
+                -name 'godot.*.template_debug.*' ! -name '*.o' ! -name '*.debug' \
+                | head -1)
 
-          with open(cfg) as f:
-              content = f.read()
+              # macOS export templates must be a zip containing a partial .app
+              # bundle. Godot unpacks it, injects the binary, and repacks.
+              WORKDIR="$(mktemp -d)/Godot.app"
+              mkdir -p "$WORKDIR/Contents/MacOS"
+              mkdir -p "$WORKDIR/Contents/Resources"
+              cp "$src/misc/dist/macos/Info.plist" "$WORKDIR/Contents/"
+              cp "$src/misc/dist/macos/"*.icns     "$WORKDIR/Contents/Resources/" 2>/dev/null || true
+              cp "$release" "$WORKDIR/Contents/MacOS/godot_macos_release.arm64"
+              cp "$debug"   "$WORKDIR/Contents/MacOS/godot_macos_debug.arm64"
+              chmod +x "$WORKDIR/Contents/MacOS/"*
 
-          content = re.sub(r'custom_template/release=""', f'custom_template/release="{release}"', content)
-          content = re.sub(r'custom_template/debug=""',   f'custom_template/debug="{debug}"',   content)
+              (cd "$(dirname "$WORKDIR")" && zip -r "$TEMPLATES_DIR/macos.zip" Godot.app)
+              echo "Installed macOS template zip to $TEMPLATES_DIR/macos.zip"
+              ;;
 
-          with open(cfg, "w") as f:
-              f.write(content)
-          EOF
+            Windows)
+              TEMPLATES_DIR="$APPDATA/Godot/export_templates/$GODOT_VER"
+              mkdir -p "$TEMPLATES_DIR"
+              release=$(find "$bin" -maxdepth 1 \
+                -name 'godot.*.template_release.*.exe' ! -name '*.o' \
+                | head -1)
+              debug=$(find "$bin" -maxdepth 1 \
+                -name 'godot.*.template_debug.*.exe' ! -name '*.o' \
+                | head -1)
+              cp "$release" "$TEMPLATES_DIR/windows_release_x86_64.exe"
+              cp "$debug"   "$TEMPLATES_DIR/windows_debug_x86_64.exe"
+              echo "Installed Windows templates to $TEMPLATES_DIR"
+              ;;
+          esac
 
       - name: Create export output directory
         shell: bash
@@ -173,7 +199,7 @@ jobs:
         shell: bash
         working-directory: estragon
         run: |
-          "${{ steps.find-bins.outputs.editor }}" --headless \
+          "${{ steps.find-editor.outputs.editor }}" --headless \
             --export-release "${{ matrix.preset }}" \
             "${{ github.workspace }}/export/${{ matrix.release-name }}"
 
@@ -181,7 +207,7 @@ jobs:
         shell: bash
         working-directory: estragon
         run: |
-          "${{ steps.find-bins.outputs.editor }}" --headless \
+          "${{ steps.find-editor.outputs.editor }}" --headless \
             --export-debug "${{ matrix.preset }}" \
             "${{ github.workspace }}/export/${{ matrix.debug-name }}"
 
