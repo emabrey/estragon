@@ -211,17 +211,17 @@ jobs:
 
       - name: Export release build
         shell: bash
-        working-directory: estragon
         run: |
           "${{ steps.find-editor.outputs.editor }}" --headless \
+            --path "$GITHUB_WORKSPACE/estragon" \
             --export-release "${{ matrix.preset }}" \
             "${{ github.workspace }}/export/${{ matrix.release-name }}"
 
       - name: Export debug build
         shell: bash
-        working-directory: estragon
         run: |
           "${{ steps.find-editor.outputs.editor }}" --headless \
+            --path "$GITHUB_WORKSPACE/estragon" \
             --export-debug "${{ matrix.preset }}" \
             "${{ github.workspace }}/export/${{ matrix.debug-name }}"
 
