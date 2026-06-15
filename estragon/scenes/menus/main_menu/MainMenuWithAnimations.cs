@@ -1,4 +1,8 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+using estragon.scripts;
+
+namespace estragon.scenes.menus.main_menu;
 
 /// <summary>Main menu extension that adds options and animates the title and menu fading in.</summary>
 public partial class MainMenuWithAnimations : MainMenu

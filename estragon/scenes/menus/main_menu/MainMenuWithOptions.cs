@@ -1,4 +1,8 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+using estragon.scripts;
+
+namespace estragon.scenes.menus.main_menu;
 
 /// <summary>Main menu extension that adds options. Adds a 'Continue' button if a game is in progress.</summary>
 public partial class MainMenuWithOptions : MainMenu

@@ -1,4 +1,7 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+
+namespace estragon.scenes.menus.options_menu.game.reset_game_control;
 
 public partial class ResetGameControl : HBoxContainer
 {

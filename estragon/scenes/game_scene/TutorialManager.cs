@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.scenes.game_scene;
+
 /// <summary>A script to add into a level or game scene to display tutorial windows.</summary>
 public partial class TutorialManager : Node
 {

@@ -1,4 +1,9 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+using estragon.scripts;
+using estragon.scenes.game_scene;
+
+namespace estragon.scenes.game_scene.levels;
 
 public partial class Level : Node
 {

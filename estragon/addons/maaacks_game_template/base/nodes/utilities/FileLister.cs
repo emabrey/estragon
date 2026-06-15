@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Helper class for listing all the scenes in a directory.</summary>
 [Tool]
 [GlobalClass]

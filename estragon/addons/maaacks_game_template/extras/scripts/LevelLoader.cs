@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Loads scenes into a container.</summary>
 [Tool]
 [GlobalClass]

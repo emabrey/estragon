@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Scene for displaying the progress of a loading scene to the player.</summary>
 [GlobalClass]
 public partial class LoadingScreen : CanvasLayer

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Interface to read/write general application settings through <see cref="PlayerConfig"/>.</summary>
 public static class AppSettings
 {

@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.scripts;
+
 [GlobalClass]
 public partial class GameState : Resource
 {

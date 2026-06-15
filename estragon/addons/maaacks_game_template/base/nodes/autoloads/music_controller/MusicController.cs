@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Controller for music playback across scenes.</summary>
 [GlobalClass]
 public partial class MusicController : Node

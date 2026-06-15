@@ -1,4 +1,7 @@
 using Godot;
+using estragon.scripts;
+
+namespace estragon.scenes.menus.level_select_menu;
 
 public partial class LevelSelectMenu : Control
 {

@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using Godot;
+using estragon.addons.maaacks_game_template;
+
+namespace estragon.scenes.loading_screen;
 
 /// <summary>Loading Screen extension that pre-loads shaders before opening the next scene.</summary>
 public partial class LoadingScreenWithShaderCaching : LoadingScreen

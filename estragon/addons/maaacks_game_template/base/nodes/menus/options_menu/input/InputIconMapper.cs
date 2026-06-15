@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 [Tool]
 [GlobalClass]
 public partial class InputIconMapper : FileLister

@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Interface for a single configuration file through <see cref="ConfigFile"/>.</summary>
 public static class PlayerConfig
 {

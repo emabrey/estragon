@@ -1,4 +1,7 @@
 using Godot;
+using estragon.scripts;
+
+namespace estragon.scenes.menus.options_menu.game;
 
 public partial class GameOptionsMenu : Control
 {

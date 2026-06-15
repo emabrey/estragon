@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Scene to list the input actions out in a tree format.</summary>
 [Tool]
 [GlobalClass]

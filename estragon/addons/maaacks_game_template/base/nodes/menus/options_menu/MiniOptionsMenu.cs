@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 public partial class MiniOptionsMenu : Control
 {
     private Control MuteControl => GetNode<Control>("%MuteControl");

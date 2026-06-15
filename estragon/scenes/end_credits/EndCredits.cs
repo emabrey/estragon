@@ -1,4 +1,8 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+using estragon.scenes.credits;
+
+namespace estragon.scenes.end_credits;
 
 [Tool]
 public partial class EndCredits : ScrollingCredits

@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 [GlobalClass]
 public partial class GlobalStateData : Resource
 {

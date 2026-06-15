@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Scene for displaying opening logos, placards, or other images before a game.</summary>
 public partial class Opening : Control
 {

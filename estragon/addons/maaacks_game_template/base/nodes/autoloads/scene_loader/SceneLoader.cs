@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Autoload class for loading scenes with an optional loading screen.</summary>
 [GlobalClass]
 public partial class SceneLoader : Node

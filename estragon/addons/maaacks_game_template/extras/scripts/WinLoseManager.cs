@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 public partial class WinLoseManager : Node
 {
     [Export(PropertyHint.File, "*.tscn")] public string MainMenuScenePath { get; set; } = "";

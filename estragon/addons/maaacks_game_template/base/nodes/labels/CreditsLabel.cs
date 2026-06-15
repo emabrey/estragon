@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Script for parsing an attribution file in markdown format.</summary>
 [Tool]
 public partial class CreditsLabel : RichTextLabel

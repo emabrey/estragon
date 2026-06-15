@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Scene for adjusting the volume of the audio busses.</summary>
 public partial class AudioOptionsMenu : Control
 {

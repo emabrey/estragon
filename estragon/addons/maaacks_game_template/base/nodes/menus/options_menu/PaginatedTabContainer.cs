@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Applies UI page up and page down inputs to tab switching.</summary>
 public partial class PaginatedTabContainer : TabContainer
 {

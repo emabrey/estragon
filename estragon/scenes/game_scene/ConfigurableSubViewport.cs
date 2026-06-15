@@ -1,4 +1,7 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+
+namespace estragon.scenes.game_scene;
 
 /// <summary>Script to apply the anti-aliasing setting from PlayerConfig to a SubViewport.</summary>
 public partial class ConfigurableSubViewport : SubViewport

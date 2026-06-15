@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Displays the value of `application/config/version`, set in project settings.</summary>
 [Tool]
 public partial class ConfigVersionLabel : Label

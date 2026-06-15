@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Helper class for organizing constants related to <see cref="InputEvent"/>.</summary>
 public static class InputEventHelper
 {

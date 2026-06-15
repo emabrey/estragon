@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Controller for managing all UI sounds in a scene from one place.</summary>
 [GlobalClass]
 public partial class UISoundController : Node

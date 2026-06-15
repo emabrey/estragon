@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Node that captures UI focus when switching menus.</summary>
 public partial class CaptureFocus : Control
 {

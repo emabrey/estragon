@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 public static class GlobalState
 {
     public const string SaveStatePath = "user://global_state.tres";

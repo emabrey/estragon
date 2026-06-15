@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Base menu scene that links to a game scene, an options menu, and credits.</summary>
 [GlobalClass]
 public partial class MainMenu : Control

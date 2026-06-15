@@ -1,4 +1,7 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+
+namespace estragon.scripts;
 
 public partial class LevelAndStateManager : LevelManager
 {

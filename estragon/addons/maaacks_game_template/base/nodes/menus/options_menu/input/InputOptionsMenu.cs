@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 [Tool]
 public partial class InputOptionsMenu : Control
 {

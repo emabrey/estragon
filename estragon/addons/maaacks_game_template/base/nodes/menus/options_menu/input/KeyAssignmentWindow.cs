@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Scene to confirm a new input for an action name.</summary>
 [Tool]
 public partial class KeyAssignmentWindow : ConfirmationOverlaidWindow

@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Generic scene for editing a value of the <see cref="PlayerConfig"/>.</summary>
 [Tool]
 [GlobalClass]

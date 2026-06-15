@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Control node that captures the mouse for games that require it.</summary>
 public partial class CaptureMouse : Control
 {

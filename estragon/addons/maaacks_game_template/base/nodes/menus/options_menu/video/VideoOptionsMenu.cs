@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 public partial class VideoOptionsMenu : Control
 {
     private OptionControl ResolutionControl => GetNode<OptionControl>("%ResolutionControl");

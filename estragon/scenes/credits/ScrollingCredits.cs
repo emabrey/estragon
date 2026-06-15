@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.scenes.credits;
+
 [Tool]
 public partial class ScrollingCredits : Control
 {

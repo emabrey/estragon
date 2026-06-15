@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Displays the value of `version` from the config file of the specified plugin.</summary>
 [Tool]
 public partial class PluginVersionLabel : Label

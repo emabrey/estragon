@@ -1,4 +1,7 @@
 using Godot;
+using estragon.addons.maaacks_game_template;
+
+namespace estragon.scenes.windows;
 
 [Tool]
 public partial class MainMenuCreditsWindow : OverlaidWindowContainer

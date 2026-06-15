@@ -1,5 +1,7 @@
 using Godot;
 
+namespace estragon.addons.maaacks_game_template;
+
 /// <summary>Node for opening a pause menu when detecting a 'ui_cancel' event.</summary>
 public partial class PauseMenuController : Node
 {

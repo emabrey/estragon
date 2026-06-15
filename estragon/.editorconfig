@@ -2,3 +2,9 @@ root = true
 
 [*]
 charset = utf-8
+
+# Rider: suppress namespace-directory mismatch for the addon.
+# All addon files intentionally share a flat estragon.addons.maaacks_game_template
+# namespace rather than mirroring the deeply-nested subdirectory structure.
+[addons/**/*.cs]
+resharper_namespace_does_not_correspond_to_file_location_highlighting = none
