@@ -4,3 +4,6 @@
 
 # Estragon specific ignores
 godot.gdkey
+
+# IDE
+.idea/
