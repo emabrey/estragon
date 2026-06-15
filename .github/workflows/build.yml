@@ -162,12 +162,40 @@ jobs:
                 | head -1)
 
               # macOS export templates must be a zip containing a partial .app
-              # bundle. Godot unpacks it, injects the binary, and repacks.
+              # bundle. Godot's export plugin patches Info.plist with project
+              # settings, so we provide a minimal placeholder here.
+              # misc/dist/macos/Info.plist doesn't exist in 4.6 source — the
+              # export plugin generates it dynamically from export preset values.
               WORKDIR="$(mktemp -d)/Godot.app"
               mkdir -p "$WORKDIR/Contents/MacOS"
               mkdir -p "$WORKDIR/Contents/Resources"
-              cp "$src/misc/dist/macos/Info.plist" "$WORKDIR/Contents/"
-              cp "$src/misc/dist/macos/"*.icns     "$WORKDIR/Contents/Resources/" 2>/dev/null || true
+
+              cat > "$WORKDIR/Contents/Info.plist" << 'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleExecutable</key>
+  <string>$GODOT_MACOS_BUNDLE_BINARY</string>
+  <key>CFBundleIdentifier</key>
+  <string>com.example.game</string>
+  <key>CFBundleName</key>
+  <string>Game</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>1.0</string>
+  <key>CFBundleVersion</key>
+  <string>1.0</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+  <key>LSMinimumSystemVersion</key>
+  <string>10.13</string>
+</dict>
+</plist>
+PLIST
+              printf 'APPL????' > "$WORKDIR/Contents/PkgInfo"
+
               cp "$release" "$WORKDIR/Contents/MacOS/godot_macos_release.arm64"
               cp "$debug"   "$WORKDIR/Contents/MacOS/godot_macos_debug.arm64"
               chmod +x "$WORKDIR/Contents/MacOS/"*
@@ -179,14 +207,23 @@ jobs:
             Windows)
               TEMPLATES_DIR="$APPDATA/Godot/export_templates/$GODOT_VER"
               mkdir -p "$TEMPLATES_DIR"
+              # Exclude .console.exe — it lacks the PCK resource section needed
+              # for embed_pck=true and causes "PCK section not found" on export.
               release=$(find "$bin" -maxdepth 1 \
-                -name 'godot.*.template_release.*.exe' ! -name '*.o' \
+                -name 'godot.*.template_release.*.exe' \
+                ! -name '*.console.exe' ! -name '*.o' \
                 | head -1)
               debug=$(find "$bin" -maxdepth 1 \
-                -name 'godot.*.template_debug.*.exe' ! -name '*.o' \
+                -name 'godot.*.template_debug.*.exe' \
+                ! -name '*.console.exe' ! -name '*.o' \
                 | head -1)
               cp "$release" "$TEMPLATES_DIR/windows_release_x86_64.exe"
               cp "$debug"   "$TEMPLATES_DIR/windows_debug_x86_64.exe"
+              # Console wrappers are optional (used when export_console_wrapper=1)
+              find "$bin" -maxdepth 1 -name '*.template_release.*.console.exe' \
+                -exec cp {} "$TEMPLATES_DIR/windows_release_x86_64_console.exe" \; 2>/dev/null || true
+              find "$bin" -maxdepth 1 -name '*.template_debug.*.console.exe' \
+                -exec cp {} "$TEMPLATES_DIR/windows_debug_x86_64_console.exe" \; 2>/dev/null || true
               echo "Installed Windows templates to $TEMPLATES_DIR"
               ;;
           esac
