@@ -70,7 +70,7 @@ jobs:
       # templates are compiled (required for module_mono_enabled=yes builds).
       - name: Build Godot Secure editor
         id: godot-secure
-        uses: emabrey/GodotSecureAction@v1
+        uses: emabrey/GodotSecureAction@v2
         with:
           godot-version:    '4.6.4-rc'
           godot-repo:       'emabrey/godot'
