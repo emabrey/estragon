@@ -133,8 +133,11 @@ jobs:
           src="${{ steps.find-editor.outputs.source }}"
           bin="$src/bin"
 
-          # Godot template directory name encodes version + mono variant
-          GODOT_VER="4.6.stable.mono"
+          # Godot template directory name: {major}.{minor}.{patch}.{status}.mono
+          GODOT_VER=$(python3 -c "
+import sys; d = {}
+exec(open('$src/version.py').read(), d)
+print(f\"{d['major']}.{d['minor']}.{d['patch']}.{d['status']}.mono\")")
 
           case "$RUNNER_OS" in
             Linux)
